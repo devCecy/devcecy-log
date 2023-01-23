@@ -5,10 +5,10 @@ import { BlogSEO } from '@/components/SEO'
 // import Image from '@/components/Image'
 import Tag from '@/components/Tag'
 import siteMetadata from '@/data/siteMetadata'
-// import Comments from '@/components/comments'
+import Comments from '@/components/comments'
 import ScrollTopAndComment from '@/components/ScrollTopAndComment'
 
-// const editUrl = (fileName) => `${siteMetadata.siteRepo}/blob/master/data/blog/${fileName}`
+const editUrl = (fileName) => `${siteMetadata.siteRepo}/blob/master/data/blog/${fileName}`
 // const discussUrl = (slug) =>
 //   `https://mobile.twitter.com/search?q=${encodeURIComponent(
 //     `${siteMetadata.siteUrl}/blog/${slug}`
@@ -52,21 +52,13 @@ export default function PostLayout({ frontMatter, authorDetails, next, prev, chi
       <article>
         {/* 본문 */}
         <div
-          className="divide-y divide-gray-200 pb-8 dark:divide-gray-700 xl:grid xl:grid-cols-4 xl:gap-x-6 xl:divide-y-0 xl:p-5"
+          className="divide-y divide-gray-200 pb-8 dark:divide-gray-700  xl:p-5"
           style={{ gridTemplateRows: 'auto 1fr' }}
         >
-          <div className="divide-y divide-gray-200 dark:divide-gray-700 xl:col-span-3 xl:row-span-2 xl:pb-0">
-            <div className="prose max-w-none pt-10 pb-8 dark:prose-dark">{children}</div>
-            {/* <div className="pt-6 pb-6 text-sm text-gray-700 dark:text-gray-300">
-                <Link href={discussUrl(slug)} rel="nofollow">
-                  {'Discuss on Twitter'}
-                </Link>
-                {` • `}
-                <Link href={editUrl(fileName)}>{'View on GitHub'}</Link>
-              </div> */}
-            {/* TODO: 댓글기능 생성 */}
-            {/* <Comments frontMatter={frontMatter} /> */}
-          </div>
+          <div className="prose max-w-none pt-10 pb-8 dark:prose-dark">{children}</div>
+
+          {/* 댓글 */}
+          <Comments frontMatter={frontMatter} />
         </div>
       </article>
       <footer>
