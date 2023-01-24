@@ -28,29 +28,46 @@ draft: false
 
 ABI의 요소를 살펴봅시다.
 
+- `constant` : true이면 읽기전용으로 함수를 호출하며 가스비가 발생하지 않습니다. false이면 트렌젝션을 발생시키며 가스비가 발생합니다.
+- `inputs` : 매개변수를 정의하는 객체의 배열입니다.
+- inputs 내부의 `name` : 매개변수의 이름을 정의합니다.
+- inputs 내부의 `type` : 매개변수의 타입을 정의합니다.
+- `name`: 함수의 이름을 정의합니다.
+- `outputs` : 출력 객체의 배열입니다.
+- outputs 내부의 `name` :
+- outputs 내부의 `type` :
+- `stateMutability`: 함수의 가변성을 정의합니다. `pure`는 블록체인 상태를 읽지 않거나 쓰지 않을 수 있는 상태이고, `view`는 블록체인 상태를 읽고 쓸 수 있는 상태입니다.
+- `type` : 함수의 유형을 정의합니다. 'function', 'constructor', 'receive', 'fallback' 등이 있습니다.
+
 ```json
 [
+  // balanceOf 함수
   {
-    "inputs": [
-      //매개변수를 정의하는 객체의 배열입니다.
-      {
-        "internalType": "",
-        "name": "", // 매개변수의 이름을 정의합니다.
-        "type": "" // 매개변수의 타입을 정의합니다. ex) uint256
-      }
-    ],
-    "name": "totalSupply", // 함수의 이름을 정의합니다.
-    "outputs": [
-      // 출력 객체의 배열입니다.
-      {
-        "internalType": "uint256",
-        "name": "",
-        "type": "uint256"
-      }
-    ],
-    "stateMutability": "view", // 함수의 가변성을 정의합니다. 'pure' : 블록체인 상태를 읽지 않거나 쓰지 않을 수 있는 상태입니다., 'view' : 블록체인 상태를 읽고 쓸 수 있는 상태입니다..
-    "type": "function" // 함수의 유형을 정의합니다. 'function', 'constructor', 'receive', 'fallback' 중 하나 입니다.
+    "constant": true,
+    "inputs": [{ "name": "_owner", "type": "address" }],
+    "name": "balanceOf",
+    "outputs": [{ "name": "balance", "type": "uint256" }],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  // symbol 함수
+  {
+    "constant": true,
+    "inputs": [],
+    "name": "symbol",
+    "outputs": [{ "name": "symbol", "type": "string" }],
+    "stateMutability": "view",
+    "type": "function"
   }
+]
+```
+
+ERC-20토큰 표준에 따라 아래와 같은 형식으로도 abi가 생성될 수 있습니다.
+
+```json
+[
+  "function balanceOf(address owner) view returns (uint256)",
+  "function symbol() view returns (string)"
 ]
 ```
 
@@ -60,6 +77,6 @@ ABI의 요소를 살펴봅시다.
 
 # 참고
 
-https://stackoverflow.com/questions/3784389/difference-between-api-and-abi
 https://www.quicknode.com/guides/smart-contract-development/what-is-an-abi
+https://ko.docs.klaytn.foundation/content/smart-contract/sample-contracts/erc-20
 https://aws.amazon.com/ko/what-is/api/
