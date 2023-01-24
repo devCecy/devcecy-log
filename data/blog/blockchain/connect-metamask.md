@@ -8,7 +8,7 @@ draft: false
 
 # 들어가며
 
-암호화폐 지갑 중 하나인 Metamask를 ethers.js 라이브러리를 사용하여 연동해보겠습니다. (react, typescript 환경을 사용했습니다.)
+암호화폐 지갑 중 하나인 Metamask를 ethers.js 라이브러리를 사용하여 연동한 과정을 글로 남겨보려 합니다. (react, typescript 환경을 사용했습니다.)
 
 # Metamask 연동하기
 
@@ -85,7 +85,9 @@ const balance = await provider.getBalance(accounts[0])
 const formattedBalance = ethers.utils.formatEther(balance)
 ```
 
-5. `handleConnect`함수 전체는 아래와 같습니다.
+5. 전체 코드를 확인해봅시다.
+
+위에서 설명한 `handleConnect`함수 전체는 아래와 같습니다.
 
 ```ts
 const handleConnect = async () => {
@@ -103,10 +105,49 @@ const handleConnect = async () => {
 }
 ```
 
+살짝 리팩토링 해봅시다.
+`provider`와 `balance`를 받아오는 부분을 두 함수로 나누어 주었습니다. 그리고 provider가 업데이트되면 `getBalance`함수를 호출하도록 했습니다. 타입스크립트를 사용한다면 getBalance내부의 provider의 타입을 알 수 없어 에러가 발생할 것입니다. 그러므로 `Web3Provider`로 타입을 지정해줍니다.
+
+```ts
+const [provider, setProvider] = useState<Web3Provider | null>(null)
+const [isConnected, setIsConnected] = useState(false)
+const [balance, setBalance] = useState('')
+
+useEffect(() => {
+  if (provider !== null) getBalance()
+}, [provider])
+
+const handleConnect = async () => {
+  if (typeof window.ethereum === 'undefined') return alert('메타마스크를 설치해주세요.')
+
+  try {
+    const provider = new ethers.providers.Web3Provider(window.ethereum)
+    setProvider(provider)
+  } catch (err) {
+    alert((err as { message: string }).message)
+  }
+}
+
+const getBalance = async () => {
+  try {
+    const accounts = await (provider as Web3Provider).send('eth_requestAccounts', [])
+    const balance = await (provider as Web3Provider).getBalance(accounts[0])
+    const formattedBalance = ethers.utils.formatEther(balance)
+
+    setBalance(formattedBalance)
+    setIsConnected(true)
+  } catch (err) {
+    alert((err as { message: string }).message)
+  }
+}
+```
+
 # 마무리
 
-ethers.js를 사용하면 생각보다 간단하게 웹-메타마스크 연동이 가능한것 같습니다. 다음 글에서는 메타마스크 연결해제 및 네트워크/어카운트 변경 감지 등 ethers.js를 사용하여 좀 더 세세한 처리를 해보겠습니다.
+ethers.js를 사용하면 생각보다 간단하게 웹-메타마스크 연동이 가능한것 같습니다. 다음 글에서는 메타마스크 연결해제 및 네트워크/어카운트 변경 감지와 같은 세세한 처리를 해보겠습니다.
+피드백이 있다면 언제든지 댓글로 남겨주시면 감사하겠습니다!
 
 # 참고
 
-[ethers.js 공식문서](https://docs.ethers.org/v5/getting-started/#getting-started--connecting)
+- [GitHub 전체 코드 확인하기](https://github.com/devCecy/connect-cryptocurrency-wallet)
+- [ethers.js 공식문서](https://docs.ethers.org/v5/getting-started/#getting-started--connecting)
