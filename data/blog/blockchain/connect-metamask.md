@@ -106,7 +106,7 @@ const handleConnect = async () => {
 ```
 
 살짝 리팩토링 해봅시다.
-`provider`와 `balance`를 받아오는 부분을 두 함수로 나누어 주었습니다. 그리고 provider가 업데이트되면 `getBalance`함수를 호출하도록 했습니다. 타입스크립트를 사용한다면 getBalance내부의 provider의 타입을 알 수 없어 에러가 발생할 것입니다. 그러므로 `Web3Provider`로 타입을 지정해줍니다.
+`provider`와 `balance`를 받아오는 부분을 두 함수로 나누어 주었습니다. 그리고 provider가 업데이트되면 `getBalance`함수를 호출하도록 했습니다. 타입스크립트를 사용한다면 getBalance내부의 provider의 타입을 알 수 없어 에러가 발생할 것입니다. 그러므로 `Web3Provider`로 타입을 지정해줍니다. (npm i @ethersproject/providers 해준뒤 import 해와야 합니다.)
 
 ```ts
 const [provider, setProvider] = useState<Web3Provider | null>(null)
