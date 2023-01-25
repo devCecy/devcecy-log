@@ -12,9 +12,9 @@ draft: false
 
 먼저, 익숙한 API에 대해 다시한번 정의해본 뒤 ABI를 알아봅시다.
 
-## API (Application Program Interface)
+## API (Application Programming Interface)
 
-`API`는 <strong>Application Program Interface</strong>의 줄임말로, 두 프로그램 구성 요소가 서로 통신할 수 있도록 돕는 인터페이스를 뜻합니다.
+`API`는 <strong>Application Programming Interface</strong>의 줄임말로, Application과 서로 상호작용할 수 있도록 방식(Interface)을 뜻합니다.
 
 여기서 `Application`은 고유한 기능을 가진 모든 소프트웨어를 나타내며, `Interface`는 두 Application간의 요청과 응답을 사용하여 서로 통신할 수 있는 방법을 정의한 것입니다. 즉, 두 `Application`이 서로 통신할 수 있도록 돕는 방식(`Interface`) 정도로 이해하면 될 것 같습니다.
 
@@ -62,7 +62,7 @@ ABI의 요소를 살펴봅시다.
 ]
 ```
 
-ERC-20토큰 표준에 따라 아래와 같은 형식으로도 abi가 생성될 수 있습니다.
+ethers.js에서는 `human-readable ABI`형태로 ABI를 작성할 수 있습니다. ([RicMoo가 작성한 관련 글](https://blog.ricmoo.com/human-readable-contract-abis-in-ethers-js-141902f4d917))
 
 ```json
 [
