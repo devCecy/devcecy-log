@@ -63,7 +63,8 @@ module.exports = {
               backgroundColor: theme('colors.gray.800'),
             },
             code: {
-              color: theme('colors.pink.500'),
+              color: theme('colors.orange.500'),
+              fontWeight: 600,
               backgroundColor: theme('colors.gray.100'),
               paddingLeft: '4px',
               paddingRight: '4px',
