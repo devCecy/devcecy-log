@@ -2,7 +2,7 @@ import Script from 'next/script'
 
 import siteMetadata from '@/data/siteMetadata'
 
-const GAScript = () => {
+const GoogleAnalytics = () => {
   return (
     <>
       <Script
@@ -10,8 +10,8 @@ const GAScript = () => {
         src={`https://www.googletagmanager.com/gtag/js?id=${siteMetadata.analytics.googleAnalyticsId}`}
       />
       <Script
-        id="ga-script"
-        strategy="lazyOnload"
+        id="gtag-init"
+        strategy="afterInteractive"
         dangerouslySetInnerHTML={{
           __html: `
             window.dataLayer = window.dataLayer || [];
@@ -27,7 +27,14 @@ const GAScript = () => {
   )
 }
 
-export default GAScript
+export default GoogleAnalytics
+
+// https://developers.google.com/analytics/devguides/collection/gtagjs/pages
+export const pageview = (url) => {
+  window.gtag('config', siteMetadata.analytics.googleAnalyticsId, {
+    page_path: url,
+  })
+}
 
 // https://developers.google.com/analytics/devguides/collection/gtagjs/events
 export const logEvent = (action, category, label, value) => {
