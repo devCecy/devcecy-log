@@ -1,20 +1,21 @@
+import siteMetadata from '@/data/siteMetadata'
+
+// components
 import Link from '@/components/Link'
-import PageTitle from '@/components/PageTitle'
 import SectionContainer from '@/components/SectionContainer'
 import { BlogSEO } from '@/components/SEO'
-// import Image from '@/components/Image'
 import Tag from '@/components/Tag'
-import siteMetadata from '@/data/siteMetadata'
 import Comments from '@/components/comments'
 import ScrollTopAndComment from '@/components/ScrollTopAndComment'
+import PostCard from '@/components/postCard'
 
-const editUrl = (fileName) => `${siteMetadata.siteRepo}/blob/master/data/blog/${fileName}`
+// const editUrl = (fileName) => `${siteMetadata.siteRepo}/blob/master/data/blog/${fileName}`
 // const discussUrl = (slug) =>
 //   `https://mobile.twitter.com/search?q=${encodeURIComponent(
 //     `${siteMetadata.siteUrl}/blog/${slug}`
 //   )}`
 
-const postDateTemplate = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' }
+// const postDateTemplate = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' }
 
 export default function PostLayout({ frontMatter, authorDetails, next, prev, children }) {
   const { slug, fileName, date, title, summary, tags } = frontMatter
@@ -28,27 +29,9 @@ export default function PostLayout({ frontMatter, authorDetails, next, prev, chi
       />
       <ScrollTopAndComment />
       {/* 글 요약 */}
-      <header className="pt-6 xl:p-5 xl:pb-6">
-        <div className="space-y-1">
-          <PageTitle>{title}</PageTitle>
-          {summary}
-        </div>
-        <div className="flex items-center gap-5">
-          <dl className="pt-6 pb-10 ">
-            <dt className="sr-only">Published on</dt>
-            <dd className="text-base font-medium leading-6 text-gray-500 dark:text-gray-400">
-              <time dateTime={date}>
-                {new Date(date).toLocaleDateString(siteMetadata.locale, postDateTemplate)}
-              </time>
-            </dd>
-          </dl>
-          <div className="flex flex-wrap pt-6 pb-10">
-            {tags.map((tag) => (
-              <Tag key={tag} text={tag} />
-            ))}
-          </div>
-        </div>
-      </header>
+      <li className="mb-10 list-none rounded-lg">
+        <PostCard key={slug} slug={slug} date={date} title={title} summary={summary} tags={tags} />
+      </li>
       <article>
         {/* 본문 */}
         <div

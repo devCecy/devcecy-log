@@ -1,11 +1,13 @@
-import Link from '@/components/Link'
-import Tag from '@/components/Tag'
-import siteMetadata from '@/data/siteMetadata'
 import { useState } from 'react'
+import { useTheme } from 'next-themes'
+import Link from 'next/link'
+
+// components
 import Pagination from '@/components/Pagination'
-import formatDate from '@/lib/utils/formatDate'
+import PostCard from '@/components/postCard'
 
 export default function ListLayout({ posts, title, initialDisplayPosts = [], pagination }) {
+  const { theme } = useTheme()
   const [searchValue, setSearchValue] = useState('')
   const filteredBlogPosts = posts.filter((frontMatter) => {
     const searchContent = frontMatter.title + frontMatter.summary + frontMatter.tags.join(' ')
@@ -18,8 +20,8 @@ export default function ListLayout({ posts, title, initialDisplayPosts = [], pag
 
   return (
     <>
-      <div className="divide-y divide-gray-200 dark:divide-gray-700">
-        <div className="space-y-2 pt-6 pb-8 md:space-y-5">
+      <div className="divide-y divide-gray-200 px-6 dark:divide-gray-700">
+        <div className="space-y-4 pt-6 pb-8 md:space-y-5">
           <h1 className="text-3xl font-extrabold leading-9 tracking-tight text-gray-900 dark:text-gray-100 sm:text-3xl sm:leading-10 md:text-4xl md:leading-14">
             {title}
           </h1>
@@ -28,8 +30,8 @@ export default function ListLayout({ posts, title, initialDisplayPosts = [], pag
               aria-label="Search articles"
               type="text"
               onChange={(e) => setSearchValue(e.target.value)}
-              placeholder="Search articles"
-              className="block w-full rounded-md border border-gray-300 bg-white px-4 py-2 text-gray-900 focus:border-primary-500 focus:ring-primary-500 dark:border-gray-900 dark:bg-gray-800 dark:text-gray-100"
+              placeholder="키워드를 검색해 보세요!"
+              className="block w-full rounded-md border border-gray-300 bg-white p-6 px-4 py-2 text-gray-900 focus:border-primary-500 focus:ring-primary-500 dark:border-gray-900 dark:bg-gray-800 dark:text-gray-100"
             />
             <svg
               className="absolute right-3 top-3 h-5 w-5 text-gray-400 dark:text-gray-300"
@@ -52,33 +54,24 @@ export default function ListLayout({ posts, title, initialDisplayPosts = [], pag
           {displayPosts.map((frontMatter) => {
             const { slug, date, title, summary, tags } = frontMatter
             return (
-              <li key={slug} className="py-4">
-                <article className="space-y-2 xl:grid xl:grid-cols-4 xl:items-baseline xl:space-y-0">
-                  <div className="space-y-3 xl:col-span-3">
-                    <h3 className="text-2xl font-bold leading-8 tracking-tight">
-                      <Link href={`/blog/${slug}`} className="text-gray-900 dark:text-gray-100">
-                        {title}
-                      </Link>
-                    </h3>
-                    <div className="prose max-w-none text-gray-500 dark:text-gray-400">
-                      {summary}
-                    </div>
-                    <div className="flex items-center gap-5">
-                      <dl>
-                        <dt className="sr-only">Published on</dt>
-                        <dd className="text-base font-medium leading-6 text-gray-500 dark:text-gray-400">
-                          <time dateTime={date}>{formatDate(date)}</time>
-                        </dd>
-                      </dl>
-                      <div className="flex flex-wrap">
-                        {tags.map((tag) => (
-                          <Tag key={tag} text={tag} />
-                        ))}
-                      </div>
-                    </div>
-                  </div>
-                </article>
-              </li>
+              // eslint-disable-next-line @next/next/link-passhref
+              <Link key={slug} href={`/blog/${slug}`} aria-label={`Read "${title}"`}>
+                <li
+                  key={slug}
+                  className={`${
+                    theme === 'light' ? 'hover:bg-gray-100' : 'hover:bg-gray-800'
+                  } mb-10 rounded-lg py-5 sm:px-5`}
+                >
+                  <PostCard
+                    key={slug}
+                    slug={slug}
+                    date={date}
+                    title={title}
+                    summary={summary}
+                    tags={tags}
+                  />
+                </li>
+              </Link>
             )
           })}
         </ul>
