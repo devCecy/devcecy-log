@@ -5,7 +5,7 @@ import { useTheme } from 'next-themes'
 // components
 import Link from '@/components/Link'
 import { PageSEO } from '@/components/SEO'
-import PostCard from '@/components/postCard'
+import PostCard from '@/components/PostCard'
 
 const MAX_DISPLAY = 5
 

@@ -4,7 +4,7 @@ import Link from 'next/link'
 
 // components
 import Pagination from '@/components/Pagination'
-import PostCard from '@/components/postCard'
+import PostCard from '@/components/PostCard'
 
 export default function ListLayout({ posts, title, initialDisplayPosts = [], pagination }) {
   const { theme } = useTheme()

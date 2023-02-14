@@ -1,8 +1,7 @@
 import formatDate from '@/lib/utils/formatDate'
-import Link from 'next/link'
 import Tag from '@/components/Tag'
 
-const PostCard = ({ slug, date, title, summary, tags }) => {
+const PostCard = ({ date, title, summary, tags }) => {
   return (
     <article>
       <div className="space-y-2">
