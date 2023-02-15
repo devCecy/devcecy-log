@@ -4,7 +4,7 @@ import Link from 'next/link'
 
 // components
 import Pagination from '@/components/Pagination'
-import PostCard from '@/components/PostCard'
+import SimplePostCard from '@/components/SimplePostCard'
 
 export default function ListLayout({ posts, title, initialDisplayPosts = [], pagination }) {
   const { theme } = useTheme()
@@ -62,7 +62,7 @@ export default function ListLayout({ posts, title, initialDisplayPosts = [], pag
                     theme === 'light' ? 'hover:bg-gray-100' : 'hover:bg-gray-800'
                   } mb-10 rounded-lg py-5 sm:px-5`}
                 >
-                  <PostCard
+                  <SimplePostCard
                     key={slug}
                     slug={slug}
                     date={date}

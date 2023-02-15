@@ -7,7 +7,7 @@ import { BlogSEO } from '@/components/SEO'
 import Tag from '@/components/Tag'
 import Comments from '@/components/comments'
 import ScrollTopAndComment from '@/components/ScrollTopAndComment'
-import PostCard from '@/components/PostCard'
+import SimplePostCard from '@/components/SimplePostCard'
 
 // const editUrl = (fileName) => `${siteMetadata.siteRepo}/blob/master/data/blog/${fileName}`
 // const discussUrl = (slug) =>
@@ -30,7 +30,14 @@ export default function PostLayout({ frontMatter, authorDetails, next, prev, chi
       <ScrollTopAndComment />
       {/* 글 요약 */}
       <li className="m-5 list-none rounded-lg">
-        <PostCard key={slug} slug={slug} date={date} title={title} summary={summary} tags={tags} />
+        <SimplePostCard
+          key={slug}
+          slug={slug}
+          date={date}
+          title={title}
+          summary={summary}
+          tags={tags}
+        />
       </li>
       <article>
         {/* 본문 */}

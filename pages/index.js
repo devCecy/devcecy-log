@@ -5,7 +5,7 @@ import { useTheme } from 'next-themes'
 // components
 import Link from '@/components/Link'
 import { PageSEO } from '@/components/SEO'
-import PostCard from '@/components/PostCard'
+import SimplePostCard from '@/components/SimplePostCard'
 
 const MAX_DISPLAY = 5
 
@@ -33,7 +33,7 @@ export default function Home({ posts }) {
                     theme === 'light' ? 'hover:bg-gray-100' : 'hover:bg-gray-800'
                   } mb-10 rounded-lg p-5`}
                 >
-                  <PostCard
+                  <SimplePostCard
                     key={slug}
                     slug={slug}
                     date={date}

@@ -1,7 +1,7 @@
 import formatDate from '@/lib/utils/formatDate'
 import Tag from '@/components/Tag'
 
-const PostCard = ({ date, title, summary, tags }) => {
+const SimplePostCard = ({ date, title, summary, tags }) => {
   return (
     <article>
       <div className="space-y-2">
@@ -31,4 +31,4 @@ const PostCard = ({ date, title, summary, tags }) => {
   )
 }
 
-export default PostCard
+export default SimplePostCard
