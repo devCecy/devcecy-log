@@ -7,7 +7,7 @@ import { ThemeProvider } from 'next-themes'
 import Head from 'next/head'
 import { useRouter } from 'next/router'
 import { useEffect } from 'react'
-import Script from 'next/script'
+// import Script from 'next/script'
 
 import siteMetadata from '@/data/siteMetadata'
 import { ClientReload } from '@/components/ClientReload'
@@ -40,13 +40,15 @@ export default function App({ Component, pageProps }) {
       </Head>
       {isDevelopment && isSocket && <ClientReload />}
       {/* <GoogleAnalytics /> */}
-      <Script
-        strategy="afterInteractive"
+      <script
+        // strategy="afterInteractive"
+        async
         src={`https://www.googletagmanager.com/gtag/js?id=${siteMetadata.analytics.googleAnalyticsId}`}
       />
-      <Script
-        id="gtag-init"
-        strategy="afterInteractive"
+      <script
+        // id="gtag-init"
+        // strategy="afterInteractive"
+        async
         dangerouslySetInnerHTML={{
           __html: `
             window.dataLayer = window.dataLayer || [];
