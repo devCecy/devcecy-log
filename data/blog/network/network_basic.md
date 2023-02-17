@@ -1,87 +1,78 @@
 ---
 title: 네트워크에 대해서 알아보자 1 - 네트워크 개요편
-summary: 기초부터 착착 - !
+summary: 이 글은 동료의 피드백으로 부터 시작하여...
 date: '2023-2-15'
 tags: ['네트워크']
-draft: true
+draft: false
 ---
 
 # 들어가며
 
-회사 동료에게 저에 대한 피드백을 해달라고 부탁한 적이 있었는데요, 그때 그분께서 '네트워크에 대해서 공부해보면 좋겠다.'라고 피드백을 주셨었습니다. 저에게 네트워크라는 단어는 나름 친숙하지만 정작 설명하자면 그래서 그게 뭔데?..라는 느낌이 드는 가깝고도 멀게만 느껴지는 개념이였습니다. 그래서 오늘부터 네트워크에 대해서 조금씩 알아보려고 합니다!
+회사 동료에게 저에 대한 피드백을 해달라고 부탁한 적이 있었는데요, 그때 한 동료분이 '네트워크에 대해서 공부해보면 좋겠다.'라고 피드백을 주셨습니다. 저에게 네트워크라는 단어는 나름 친숙하지만 정작 설명하자면 그래서 그게 뭔데?..라는 느낌이 드는 가깝고도 멀게만 느껴지는 개념이였거든요. 그래서 오늘부터 네트워크에 대해서 조금씩 알아보려고 합니다!
+
+OSI 모델의 7계층을 기준으로 각 계층에 해당하는 네트워크 개념에 대해서 하나씩 포스팅해 나갈 예정인데요, 그에 앞서 미리 알고 있으면 좋은 전반적인 네트워크 개념들을 먼저 확인해 봅시다!
 
 # 네트워크 개요
 
-프로토콜, 사설 네트워크와 공용 네트워크, LAN과 WAN, 서버, OSI모델과 TCP/IP모델, 캡슐화와 역캡슐화, 유니/멀티/브로드캐스트에 대해서 알아보겠습니다.
+`프로토콜`, `사설 네트워크와 공용 네트워크`, `LAN과 WAN`, `서버`, `OSI모델과 TCP/IP모델`, `캡슐화와 역캡슐화`, `유니/멀티/브로드캐스트`의 순서대로 하나씩 차근 차근 시작해 보겠습니다.
 
-### 프로토콜
+## 프로토콜
 
-사람과 사람이 대화할 때 언어를 이용해 대화합니다. 그리고 언어는 문법이나 발음, 표기법 등 여러 규칙들을 가지고 있습니다. `네트워크`도 서로 통신하기 위해서 `네트워크 아키텍처`를 사용합니다. 그리고 네트워크 아키텍처는 데이터 형식이나 통신 절차등의 여러 규칙을 가지고 있는데 이것을 `프로토콜`이라고 합니다. 즉, 프로토콜은 네트워크 통신 시 필요한 형식, 약속, 규약, 규칙들을 정의해 놓은 것입니다.
+`프로토콜`은 <b>네트워크를 통해 컴퓨터끼리 통신하기 위한 규약을</b>을 뜻합니다.
 
-![protocol](/static/images/blog/network/network_basic/protocol.png)
+사람과 사람이 대화하기 위해서 언어라는 것이 존재합니다. 그렇지만 서로 다른 언어를 사용하면 대화가 통하지 않습니다. 서로 같은 언어로 대화해야 소통이 된다, 라는 규칙이 있는 것입니다. 이와 같이 컴퓨터 네트워크에서도 서로 소통하기 위해 데이터 형식이나 통신 절차등의 규칙을 만들어 놓았는데 이것을 바로 `프로토콜`이라고 하는 것입니다.
 
-네트워크는 각 계층마다 주요 프로토콜을 가지고 있습니다. 이런 주요 프로토콜들이 모여 네트워크 아키텍처를 형성하는 것입니다.
+![protocol](/static/images/blog/network/network_basic/protocol.jpeg)
 
-(OSI 모델 기준)
-![network_protocol](/static/images/blog/network/network_basic/network_protocol.png)
+## 사설 네트워크(Private Network)와 공용 네트워크(Public Network)
 
-### 사설 네트워크(Private Network)와 공용 네트워크(Public Network)
+네트워크는 누가 네트워크에 접근할 수 있는지에 따라 `사설 네트워크`와 `공용 네트워크`로 나눠 볼 수 있습니다.
 
-네트워크는 누가 이용할 수 있는지에 따라 `사설 네트워크`와 `공용 네트워크`로 나눠 볼 수 있습니다.
+`사설 네트워크`는 <b>접속할 수 있는 사용자를 제한</b>하는 네트워크입니다. 주로 가정이나 회사에서 사용하며 사설 IP를 사용합니다.
 
-`사설 네트워크`
+`공용 네트워크`는 <b>누구나 접근 가능</b>한 네트워크로, 공인(공용) IP를 사용합니다. `공인 IP`는 `ISP(Internet Service Provider)`에서 할당받아 사용합니다. ISP의 예시로는 KT나 SKT, LG+ 같은 업체들이 있습니다.
 
-- 접속할 수 있는 사용자를 제한하는 네트워크로, 주로 가정이나 회사에서 사용하는 네트워크입니다.
-- 사설 IP를 사용합니다.
+인터넷 접속을 위해서는 반드시 공인 IP 주소가 필요합니다. 그렇기 때문에 사설 네트워크를 사용하는 곳에서 인터넷에 접속하기 위해서는 <b>사설 IP 주소를 공인 IP로 변환</b>하는 과정이 필요합니다.
 
-`공용 네트워크`
+![private_public_network](/static/images/blog/network/network_basic/private_public_network.jpeg)
 
-- 누구나 접근 할 수 있는 네트워크입니다.
-- 공인(공용) IP를 사용합니다.
-- 공인 IP는 ISP(Internet Service Provider)에서 할당받아 사용합니다. ISP의 예시로는 KT나 SKT같은 업체들이 있습니다.
-
-인터넷 접속을 위해서는 반드시 공인 IP 주소가 필요합니다. 그렇기 때문에 사설 네트워크를 사용하는 가정에서 인터넷에 접속하기 위해서는 사설 IP 주소를 공인 IP로 변환하는 과정이 필요합니다.
-
-![private_public_network](/static/images/blog/network/network_basic/private_public_network.png)
-
-사설 IP와 공인 IP `네트워크 대역`은 다음과 같습니다.
+사설 IP와 공인 IP의 `네트워크 대역`은 다음과 같습니다.
 자세히 보면, 공인 네트워크 대역에서 중간에 빈 부분이 사설 네트워크 대역임을 알 수 있습니다.
-재미있는 부분은, 사설 네트워크 대역의 C클래스 192.168.~ 이 부분은 어디선가 본적이 있으시다면 아마도 공유기 설치할 때 보셨을 수 있을 것 같습니다. 각자의 집에 설치한 공유기가 바로 사설 네트워크 대역을 사용하기 때문입니다. 역시 알고보니 재밌네요!
+우리가 보통 집에 설치하는 공유기가 바로 사설 네트워크 대역을 사용하는데요, 그래서 사설 네트워크 대역의 C클래스 192.168.~ 이 부분이 왠지모르게 낯이 익으실겁니다.
 
-![network_band](/static/images/blog/network/network_basic/network_band.png)
+![network_band](/static/images/blog/network/network_basic/network_band.jpeg)
 
-### LAN(Local Area Network), WAN(Wide Area Network)
+## LAN(Local Area Network), WAN(Wide Area Network)
 
-`LAN(Local Area Network)`
-`LAN`은 근거리 통신망으로 거점 내 기기끼리 서로 연결하는 역할을 합니다. 가까운 거리의 기기들을 연결함으로 네트워크의 범위는 특정 건물이나 지역으로 좁으며, 속도는 빠릅니다.
+`LAN`은 <b>근거리 통신망</b>으로 거점 내 기기끼리 서로 연결하는 역할을 합니다. 가까운 거리의 기기들을 연결함으로 네트워크의 범위는 특정 건물이나 지역으로 좁으며, 속도는 빠릅니다.
 
-`WAN(Wide Area Network)`
-`WAN`은 광역 통신망으로, LAN과 LAN을 연결해주는 역할을 합니다. LAN과 LAN을 연결하기 때문에 네트워크 범위는 넓지만 넓은 범위의 네트워크를 연결하다보니 속도는 상대적으로 느립니다. WAN은 ISP를 통해 인터넷으로 연결하는 역할을 합니다.
+`WAN`은 <b>광역 통신망</b>으로, LAN과 LAN을 전용선으로 연결해주는 역할을 합니다. 넓은 범위의 네트워크를 연결하다보니 속도는 상대적으로 느립니다.
 
-![wan](/static/images/blog/network/network_basic/wan.png)
+![wan](/static/images/blog/network/network_basic/wan.jpeg)
 
 참고로 `MAN(Metropolitan Area Network)`도 있습니다. MAN은 도시권 통신망으로 대규모 캠퍼스 혹은 도시 규모에서 사용하는 네트워크 통신망입니다. `LAN < MAN < WAN` 순서로 네트워크 규모가 더 큽니다.
 
-### 서버(Server)
+## 서버(Server)
 
-`서버(Server)`는 네트워크를 통해 클라이언트에게 데이터를 혹은 서비스를 제공해주는 프로그램 혹은 장치입니다. 서버는 운영하는 방식에 따라 `온프레미스(on-premise)`와 `클라우드 서비스`로 나눠볼 수 있습니다.
+`서버(Server)`는 네트워크를 통해 클라이언트에게 데이터를 혹은 서비스를 제공해주는 프로그램 혹은 장치입니다. 서버는 운영하는 방식에 따라 `온프레미스(on-premise)`와 `클라우드 서비스(Cloud Service)`로 나눠볼 수 있습니다.
 
-- `온프레미스(on-premise)`는 사내에 서버 운영실을 만들고 직접 서버를 운영하는 방식입니다.
-- `클라우드 서비스`는 서버를 직접 관리 및 운용하지 않고 인터넷을 통해 서버의 기능을 이용할수 있도록 돕는 서비스입니다.
+### 온프레미스(on-premise)
 
-`IaaS(Infrastructure as a Service)`는 인프라형 서비스로, 하드웨어 등 물리적인 자원을 제공하는 서비스입니다. ex) AWS, Microsoft Azure, Google Cloud
-`PasS(Platform as a Service)`는 플랫폼형 서비스로, 소프트웨어를 개발하는 플랫폼을 제공하는 서비스입니다. ex) AWS Elastic Beanstalk, Heroku
-`SasS(Software as a Service)`는 소프트웨어형 서비스로, 온라인 스토리지 서비스같이 고객이 이용하는 소프트웨어를 제공하는 서비스입니다. ex) 드롭박스, 세일즈포스, 구글 드라이브
+`온프레미스(on-premise)`는 사내에 서버 운영실을 만들고 직접 서버를 운영하는 방식입니다.
 
-![cloud_service](/static/images/blog/network/network_basic/cloud_service.png)
+### 클라우드 서비스(Cloud Service)
 
-출처 : https://www.redhat.com/ko/topics/cloud-computing/iaas-vs-paas-vs-saas
+`클라우드 서비스(Cloud Service)`는 서버를 직접 관리 및 운용하지 않고 인터넷을 통해 서버의 기능을 이용할수 있도록 돕는 서비스입니다. 어떤 기능까지 서비스를 제공하느냐에 따라 `IaaS`, `PasS`, `SasS`로 구분합니다.
 
-![iaas-paas-saas](/static/images/blog/network/network_basic/iaas-paas-saas.png)
+- `IaaS(Infrastructure as a Service)`는 인프라형 서비스로, 하드웨어 등 물리적인 자원을 제공하는 서비스입니다. ex) AWS, Microsoft Azure, Google Cloud
+- `PasS(Platform as a Service)`는 플랫폼형 서비스로, 소프트웨어를 개발하는 플랫폼을 제공하는 서비스입니다. ex) AWS Elastic Beanstalk, Heroku
+- `SasS(Software as a Service)`는 소프트웨어형 서비스로, 온라인 스토리지 서비스같이 고객이 이용하는 소프트웨어를 제공하는 서비스입니다. ex) 드롭박스, 세일즈포스, 구글 드라이브
 
-### OSI 모델, TCP/IP모델
+![cloud_service](/static/images/blog/network/network_basic/cloud_service.jpeg)
 
-네트워크 통신시 어떤 부분에서 문제가 발생했는지 확인하기 위해 `ISO`라는 국제 표준화 기구에서는 네트워크 계층을 분리해 `OSI 모델`을 만들었습니다. OSI 모델은 계층이 7개로 나눠져 있어 OSI 7계층이라고도 합니다. 이와 다르게 4계층으로 분리된 네트워크 모델도 있는데요, 바로 `TCP/IP 모델`입니다.
+## OSI 모델, TCP/IP모델
+
+`ISO`라는 국제 표준화 기구에서는 네트워크 계층을 분리해 `OSI 모델`을 만들었습니다. 만약, 네트워크 통신시 장애가 발생했는데 어떤 부분에서 문제가 발생 했는지 확인하지 못하면 대처할 수 없기 때문입니다. OSI 모델은 계층이 7개로 나눠져 있어 OSI 7계층이라고도 합니다. 이와 다르게 네트워크 계층이 4개로 분리된 네트워크 모델은 `TCP/IP 모델`이라고 합니다.
 
 `OSI 모델(7계층)`
 
@@ -89,31 +80,32 @@ draft: true
 
 - `전송 계층` : 데이터를 신뢰성있고 정확성있게 전달하는 역할을 하는 계층입니다. 네트워크 계층에서 데이트를 전송할 때 데이터가 유실되거나 에러가 날 수 있기 때문에 더 정확성 있는 데이터 전송에 초점을 맞추기 위해 전송 계층을 거치게 되는 것입니다.
 - `네트워크 계층` : 한 네트워크에서 다른 네트워크로 데이터를 전송하는데 필요한 계층입니다. (라우터)
-- `데이터 링크 계층` : 네트워크 기기간의 데이터를 주고 받으며 물리 주소를 결정하는데 필요한 계층입니다. (스위치(스위칭 허브))
-- `물리계층` : 데이터를 전기 신호로 변환하는데 필요한 계층입니다. (리피터, 허브)
+- `데이터 링크 계층` : 네트워크 기기간의 데이터를 주고 받으며 물리 주소를 결정하는데 필요한 계층입니다. (스위치)
+- `물리 계층` : 데이터를 전기 신호로 변환하는데 필요한 계층입니다. (리피터, 허브)
 
-![osi_vs_tcp_ip](/static/images/blog/network/network_basic/osi_vs_tcp_ip.png)
+![osi_vs_tcp_ip](/static/images/blog/network/network_basic/osi_vs_tcp_ip.jpeg)
 
-### 캡슐화(Capsulation), 역캡슐화(Decapsulation)
+## 캡슐화(Capsulation), 역캡슐화(Decapsulation)
 
 네트워크 계층간 이동시 `헤더(Header)`는 목적지 정보, 출발지 정보, 에러체크 등 데이터를 전송하는데 필요한 정보를 담고있습니다. 이 헤더를 붙여나가는 방식을 `캡슐화`, 헤더를 제거해 나가는 방식을 `역캡슐화`라고 합니다.
 
 데이터를 송-수신 하는 과정을 통해 캡슐화와 역캡슐화를 살펴봅시다.
 데이터를 송신하는 측에서는 응용계층부터 시작해 캡슐화하며 물리 계층까지 전달됩니다. 그리고 케이블에 전기 신호를 통해 수신 측 물리계층으로 전달됩니다. 수신 측 물리 계층부터 역캡슐화를 통해 응용 계층까지 데이터가 전달 됩니다.
 
-![capsulation_vs_decapsulation](/static/images/blog/network/network_basic/capsulation_vs_decapsulation.png)
+![capsulation_vs_decapsulation](/static/images/blog/network/network_basic/capsulation_vs_decapsulation.jpeg)
 
-참고) `PDU(Protocol Data Unit)`
+### 참고) PDU(Protocol Data Unit)
+
 `PDU`는 각 네트워크 계층에서 동작하는 데이터 단위를 나타냅니다. 각 데이터 단위는 계층별로 다른 이름을 가지고 있습니다.
 
-- 메시지(데이터) : 응용 계층에서 동작하는 데이터 단위
-- 세그먼트 : TCP 헤더가 붙은 데이터 단위
-- 패킷 : IP 헤더가 붙은 데이터의 단위
-- 프레임 : 이더넷 헤더와 트레일러가 붙은 데이터 단위
+- `메시지(데이터)` : 응용 계층에서 동작하는 데이터 단위
+- `세그먼트` : TCP 헤더가 붙은 데이터 단위
+- `패킷` : IP 헤더가 붙은 데이터의 단위
+- `프레임` : 이더넷 헤더와 트레일러가 붙은 데이터 단위
 
-![pdu](/static/images/blog/network/network_basic/pdu.png)
+![pdu](/static/images/blog/network/network_basic/pdu.jpeg)
 
-### 유니캐스트, 멀티캐스트, 브로드캐스트
+## 유니캐스트, 멀티캐스트, 브로드캐스트
 
 `유니캐스트`, `멀티캐스트`, `브로드캐스트`는 데이터를 전송하는 방식으로 몇개의 수신지로 데이터를 전송하는지에 따라 나뉩니다.
 
@@ -127,5 +119,5 @@ draft: true
 
 # 참고
 
-- [네트워크, 그림으로 이해하자](https://www.inflearn.com/course/%EB%84%A4%ED%8A%B8%EC%9B%8C%ED%81%AC-%EA%B7%B8%EB%A6%BC-%EC%9D%B4%ED%95%B4)강의를 듣고 스스로 정리하여 작성한 글 입니다.
-- 본 글에 첨부된 이미지는 모두 제가 직접 그린 것입니다.
+- [네트워크, 그림으로 이해하자](https://www.inflearn.com/course/%EB%84%A4%ED%8A%B8%EC%9B%8C%ED%81%AC-%EA%B7%B8%EB%A6%BC-%EC%9D%B4%ED%95%B4) 강의와 `그림으로 이해하는 네트워크 용어`(기타미 류지 지음/성창규 옮김/길벗) 도서를 참고하여 정리한 글입니다.
+- 본 글에 첨부된 이미지는 모두 제가 직접 그린 것으로 참고용으로만 봐주시면 감사하겠습니다.
