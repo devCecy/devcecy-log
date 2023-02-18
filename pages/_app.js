@@ -41,7 +41,26 @@ export default function App({ Component, pageProps }) {
       {isDevelopment && isSocket && <ClientReload />}
       {siteMetadata.analytics.googleAnalyticsId && (
         <>
+          {/* <!-- Google tag (gtag.js) --> */}
           <Script
+            strategy="afterInteractive"
+            src="https://www.googletagmanager.com/gtag/js?id=G-0PEV511ZYY"
+          />
+          <Script
+            id="gtag-init"
+            strategy="afterInteractive"
+            dangerouslySetInnerHTML={{
+              __html: `
+            window.dataLayer = window.dataLayer || [];
+            function gtag(){dataLayer.push(arguments);}
+            gtag('js', new Date());
+            gtag('config', 'G-0PEV511ZYY', {
+              page_path: window.location.pathname,
+            });
+          `,
+            }}
+          />
+          {/* <Script
             strategy="afterInteractive"
             src={`https://www.googletagmanager.com/gtag/js?id=${siteMetadata.analytics.googleAnalyticsId}`}
           />
@@ -58,7 +77,7 @@ export default function App({ Component, pageProps }) {
             });
           `,
             }}
-          />
+          /> */}
         </>
       )}
       <LayoutWrapper>
