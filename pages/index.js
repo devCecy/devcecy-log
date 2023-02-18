@@ -7,7 +7,7 @@ import Link from '@/components/Link'
 import { PageSEO } from '@/components/SEO'
 import SimplePostCard from '@/components/SimplePostCard'
 
-const MAX_DISPLAY = 5
+const MAX_DISPLAY = 10
 
 export async function getStaticProps() {
   const posts = await getAllFilesFrontMatter('blog')
