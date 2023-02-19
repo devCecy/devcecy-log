@@ -12,7 +12,8 @@ import siteMetadata from '@/data/siteMetadata'
 import { ClientReload } from '@/components/ClientReload'
 import LayoutWrapper from '@/components/LayoutWrapper'
 import { pageview } from '@/components/analytics/GoogleAnalytics'
-import Analytics from '@/components/analytics'
+// import Analytics from '@/components/analytics'
+// import Script from 'next/script'
 
 const isDevelopment = process.env.NODE_ENV === 'development'
 const isSocket = process.env.SOCKET
@@ -36,7 +37,27 @@ export default function App({ Component, pageProps }) {
     <ThemeProvider attribute="class" defaultTheme={siteMetadata.theme}>
       <Head>
         <meta content="width=device-width, initial-scale=1" name="viewport" />
-        <Analytics />
+        <script
+          // strategy="afterInteractive"
+          async
+          src={`https://www.googletagmanager.com/gtag/js?id=${siteMetadata.analytics.googleAnalyticsId}`}
+        />
+        <script
+          // id="gtag-init"
+          // strategy="afterInteractive"
+          async
+          dangerouslySetInnerHTML={{
+            __html: `
+            window.dataLayer = window.dataLayer || [];
+            function gtag(){dataLayer.push(arguments);}
+            gtag('js', new Date());
+            gtag('config', '${siteMetadata.analytics.googleAnalyticsId}', {
+              page_path: window.location.pathname,
+            });
+          `,
+          }}
+        />
+        {/* <Analytics /> */}
       </Head>
       {isDevelopment && isSocket && <ClientReload />}
       <LayoutWrapper>
