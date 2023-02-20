@@ -32,7 +32,6 @@ class MyDocument extends Document {
           <script
             // id="gtag-init"
             // strategy="afterInteractive"
-            async
             dangerouslySetInnerHTML={{
               __html: `
             window.dataLayer = window.dataLayer || [];
