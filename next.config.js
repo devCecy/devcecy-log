@@ -58,6 +58,9 @@ module.exports = withBundleAnalyzer({
   eslint: {
     dirs: ['pages', 'components', 'lib', 'layouts', 'scripts'],
   },
+  env: {
+    NEXT_PUBLIC_GA_ID: 'G-G1ZBN34E3F',
+  },
   async headers() {
     return [
       {
