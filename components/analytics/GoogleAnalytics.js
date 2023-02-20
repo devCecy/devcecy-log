@@ -5,23 +5,20 @@ const GoogleAnalytics = () => {
   return (
     <>
       <Script
-        strategy="afterInteractive"
+        strategy="lazyOnload"
         src={`https://www.googletagmanager.com/gtag/js?id=${siteMetadata.analytics.googleAnalyticsId}`}
       />
-      <Script
-        id="gtag-init"
-        strategy="afterInteractive"
-        dangerouslySetInnerHTML={{
-          __html: `
+
+      <Script strategy="lazyOnload" id="ga-script">
+        {`
             window.dataLayer = window.dataLayer || [];
             function gtag(){dataLayer.push(arguments);}
             gtag('js', new Date());
             gtag('config', '${siteMetadata.analytics.googleAnalyticsId}', {
               page_path: window.location.pathname,
             });
-          `,
-        }}
-      />
+        `}
+      </Script>
     </>
   )
 }
@@ -29,11 +26,11 @@ const GoogleAnalytics = () => {
 export default GoogleAnalytics
 
 // https://developers.google.com/analytics/devguides/collection/gtagjs/pages
-export const pageview = (url) => {
-  window.gtag('config', process.env.NEXT_PUBLIC_GA_ID, {
-    page_path: url,
-  })
-}
+// export const pageview = (url) => {
+//   window.gtag('config', process.env.NEXT_PUBLIC_GA_ID, {
+//     page_path: url,
+//   })
+// }
 
 // https://developers.google.com/analytics/devguides/collection/gtagjs/events
 export const logEvent = (action, category, label, value) => {
