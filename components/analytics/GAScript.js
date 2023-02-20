@@ -1,7 +1,7 @@
 import Script from 'next/script'
 import siteMetadata from '@/data/siteMetadata'
 
-const GoogleAnalytics = () => {
+const GAScript = () => {
   return (
     <>
       <Script
@@ -23,14 +23,7 @@ const GoogleAnalytics = () => {
   )
 }
 
-export default GoogleAnalytics
-
-// https://developers.google.com/analytics/devguides/collection/gtagjs/pages
-// export const pageview = (url) => {
-//   window.gtag('config', process.env.NEXT_PUBLIC_GA_ID, {
-//     page_path: url,
-//   })
-// }
+export default GAScript
 
 // https://developers.google.com/analytics/devguides/collection/gtagjs/events
 export const logEvent = (action, category, label, value) => {
