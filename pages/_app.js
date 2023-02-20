@@ -11,7 +11,8 @@ import { useEffect } from 'react'
 import siteMetadata from '@/data/siteMetadata'
 import { ClientReload } from '@/components/ClientReload'
 import LayoutWrapper from '@/components/LayoutWrapper'
-import { pageview } from '@/components/analytics/GoogleAnalytics'
+import Script from 'next/script'
+import * as gtag from 'lib/gtag'
 
 const isDevelopment = process.env.NODE_ENV === 'development'
 const isSocket = process.env.SOCKET
@@ -20,7 +21,7 @@ export default function App({ Component, pageProps }) {
   const router = useRouter()
   useEffect(() => {
     const handleRouteChange = (url) => {
-      pageview(url)
+      gtag.pageview(url)
     }
     router.events.on('routeChangeComplete', handleRouteChange)
     router.events.on('hashChangeComplete', handleRouteChange)
@@ -30,11 +31,30 @@ export default function App({ Component, pageProps }) {
     }
   }, [router.events])
 
+  console.log('gtag.GA_TRACKING_ID', gtag.GA_TRACKING_ID)
   return (
     <ThemeProvider attribute="class" defaultTheme={siteMetadata.theme}>
       <Head>
         <meta content="width=device-width, initial-scale=1" name="viewport" />
       </Head>
+      <Script
+        strategy="afterInteractive"
+        src={`https://www.googletagmanager.com/gtag/js?id=${gtag.GA_TRACKING_ID}`}
+      />
+      <Script
+        id="gtag-init"
+        strategy="afterInteractive"
+        dangerouslySetInnerHTML={{
+          __html: `
+            window.dataLayer = window.dataLayer || [];
+            function gtag(){dataLayer.push(arguments);}
+            gtag('js', new Date());
+            gtag('config', '${gtag.GA_TRACKING_ID}', {
+              page_path: window.location.pathname,
+            });
+          `,
+        }}
+      />
       {isDevelopment && isSocket && <ClientReload />}
       <LayoutWrapper>
         <Component {...pageProps} />
